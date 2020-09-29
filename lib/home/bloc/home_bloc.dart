@@ -28,7 +28,12 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       else
         yield ErrorState(error: "No hay elementos por mostrar");
     } else if (event is FilterUsersEvent) {
-      // TODO hacer despues
+      bool include = !event.props[0]; // if props[0] = true, we'll filter out even values
+      List<User> filteredList = _userList.where((user) {
+        include = !include;
+        return include;
+      }).toList();
+      yield ShowUsersState(usersList: filteredList);
     }
   }
 
